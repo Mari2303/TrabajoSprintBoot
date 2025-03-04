@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Lista de Usuarios</h1>
+    <ul id="usuarios-lista"></ul>
+
+    <h2>Crear Usuario</h2>
+    <form id="crear-usuario-form">
+        <input type="text" id="nombre-usuario" placeholder="Nombre del usuario" required>
+        <button type="submit">Crear</button>
+    </form>
+
+    <h2>Modificar Usuario</h2>
+    <form id="modificar-usuario-form">
+        <input type="number" id="id-usuario-modificar" placeholder="ID del usuario" required>
+        <input type="text" id="nombre-usuario-modificar" placeholder="Nuevo nombre del usuario" required>
+        <button type="submit">Modificar</button>
+    </form>
+
+    <h2>Eliminar Usuario</h2>
+    <form id="eliminar-usuario-form">
+        <input type="number" id="id-usuario-eliminar" placeholder="ID del usuario" required>
+        <button type="submit">Eliminar</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const lista = document.getElementById('usuarios-lista');
+
+            function cargarUsuarios() {
+                fetch('/api/usuarios')
+                    .then(response => response.json())
+                    .then(data => {
+                        lista.innerHTML = '';
+                        data.forEach(usuario => {
+                            const li = document.createElement('li');
+                            li.textContent = `${usuario.id} - ${usuario.nombre}`;
+                            lista.appendChild(li);
+                        });
+                    });
+            }
+
+            cargarUsuarios();
+
+            document.getElementById('crear-usuario-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const nombre = document.getElementById('nombre-usuario').value;
+                fetch('/api/usuarios', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nombre })
+                }).then(response => response.json())
+                  .then(() => {
+                      cargarUsuarios();
+                      document.getElementById('crear-usuario-form').reset();
+                  });
+            });
+
+            document.getElementById('modificar-usuario-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const id = document.getElementById('id-usuario-modificar').value;
+                const nombre = document.getElementById('nombre-usuario-modificar').value;
+                fetch(`/api/usuarios/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nombre })
+                }).then(response => {
+                    if (response.ok) {
+                        cargarUsuarios();
+                        document.getElementById('modificar-usuario-form').reset();
+                    } else {
+                        alert('Usuario no encontrado');
+                    }
+                });
+            });
+
+            document.getElementById('eliminar-usuario-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const id = document.getElementById('id-usuario-eliminar').value;
+                fetch(`/api/usuarios/${id}`, {
+                    method: 'DELETE'
+                }).then(response => {
+                    if (response.ok) {
+                        cargarUsuarios();
+                        document.getElementById('eliminar-usuario-form').reset();
+                    } else {
+                        alert('Usuario no encontrado');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+    <title>Gestión de Usuarios</title>
+</head>
+<body>
+    <h1>Lista de Usuarios</h1>
+    <ul id="usuarios-lista"></ul>
+
+    <h2>Crear Usuario</h2>
+    <form id="crear-usuario-form">
+        <input type="text" id="nombre-usuario" placeholder="Nombre del usuario" required>
+        <button type="submit">Crear</button>
+    </form>
+
+    <h2>Modificar Usuario</h2>
+    <form id="modificar-usuario-form">
+        <input type="number" id="id-usuario-modificar" placeholder="ID del usuario" required>
+        <input type="text" id="nombre-usuario-modificar" placeholder="Nuevo nombre del usuario" required>
+        <button type="submit">Modificar</button>
+    </form>
+
+    <h2>Eliminar Usuario</h2>
+    <form id="eliminar-usuario-form">
+        <input type="number" id="id-usuario-eliminar" placeholder="ID del usuario" required>
+        <button type="submit">Eliminar</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const lista = document.getElementById('usuarios-lista');
+
+            function cargarUsuarios() {
+                fetch('/api/usuarios')
+                    .then(response => response.json())
+                    .then(data => {
+                        lista.innerHTML = '';
+                        data.forEach(usuario => {
+                            const li = document.createElement('li');
+                            li.textContent = `${usuario.id} - ${usuario.nombre}`;
+                            lista.appendChild(li);
+                        });
+                    });
+            }
+
+            cargarUsuarios();
+
+            document.getElementById('crear-usuario-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const nombre = document.getElementById('nombre-usuario').value;
+                fetch('/api/usuarios', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nombre })
+                }).then(response => response.json())
+                  .then(() => {
+                      cargarUsuarios();
+                      document.getElementById('crear-usuario-form').reset();
+                  });
+            });
+
+            document.getElementById('modificar-usuario-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const id = document.getElementById('id-usuario-modificar').value;
+                const nombre = document.getElementById('nombre-usuario-modificar').value;
+                fetch(`/api/usuarios/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nombre })
+                }).then(response => {
+                    if (response.ok) {
+                        cargarUsuarios();
+                        document.getElementById('modificar-usuario-form').reset();
+                    } else {
+                        alert('Usuario no encontrado');
+                    }
+                });
+            });
+
+            document.getElementById('eliminar-usuario-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const id = document.getElementById('id-usuario-eliminar').value;
+                fetch(`/api/usuarios/${id}`, {
+                    method: 'DELETE'
+                }).then(response => {
+                    if (response.ok) {
+                        cargarUsuarios();
+                        document.getElementById('eliminar-usuario-form').reset();
+                    } else {
+                        alert('Usuario no encontrado');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

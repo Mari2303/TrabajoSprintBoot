@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Productos</title>
+    <link rel="stylesheet" href="css/productos.css">
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <ul id="productos-lista"></ul>
+
+    <h2>Crear Producto</h2>
+    <form id="crear-producto-form">
+        <input type="text" id="nombre-producto" placeholder="Nombre del producto" required>
+        <button type="submit">Crear</button>
+    </form>
+
+    <h2>Modificar Producto</h2>
+    <form id="modificar-producto-form">
+        <input type="number" id="id-producto-modificar" placeholder="ID del producto" required>
+        <input type="text" id="nombre-producto-modificar" placeholder="Nuevo nombre del producto" required>
+        <button type="submit">Modificar</button>
+    </form>
+
+    <h2>Eliminar Producto</h2>
+    <form id="eliminar-producto-form">
+        <input type="number" id="id-producto-eliminar" placeholder="ID del producto" required>
+        <button type="submit">Eliminar</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const lista = document.getElementById('productos-lista');
+
+            function cargarProductos() {
+                fetch('/api/productos')
+                    .then(response => response.json())
+                    .then(data => {
+                        lista.innerHTML = '';
+                        data.forEach(producto => {
+                            const li = document.createElement('li');
+                            li.textContent = `${producto.id} - ${producto.nombre}`;
+                            lista.appendChild(li);
+                        });
+                    });
+            }
+
+            cargarProductos();
+
+            document.getElementById('crear-producto-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const nombre = document.getElementById('nombre-producto').value;
+                fetch('/api/productos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nombre })
+                }).then(response => response.json())
+                  .then(() => {
+                      cargarProductos();
+                      document.getElementById('crear-producto-form').reset();
+                  });
+            });
+
+            document.getElementById('modificar-producto-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const id = document.getElementById('id-producto-modificar').value;
+                const nombre = document.getElementById('nombre-producto-modificar').value;
+                fetch(`/api/productos/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ nombre })
+                }).then(response => {
+                    if (response.ok) {
+                        cargarProductos();
+                        document.getElementById('modificar-producto-form').reset();
+                    } else {
+                        alert('Producto no encontrado');
+                    }
+                });
+            });
+
+            document.getElementById('eliminar-producto-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const id = document.getElementById('id-producto-eliminar').value;
+                fetch(`/api/productos/${id}`, {
+                    method: 'DELETE'
+                }).then(response => {
+                    if (response.ok) {
+                        cargarProductos();
+                        document.getElementById('eliminar-producto-form').reset();
+                    } else {
+                        alert('Producto no encontrado');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
