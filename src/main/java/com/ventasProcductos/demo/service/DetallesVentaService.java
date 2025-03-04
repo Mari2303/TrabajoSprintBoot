@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ventasProcductos.demo.model.Detalles_Venta;
+import com.ventasProcductos.demo.model.DetallesVenta;
 import com.ventasProcductos.demo.repository.DetallesVentaRepository;
 
 @Service
@@ -16,17 +16,17 @@ public class DetallesVentaService {
     private DetallesVentaRepository detallesVentaRepository;
 
     // Obtener todos los detalles de venta
-    public List<Detalles_Venta> findAll() {
+    public List<DetallesVenta> findAll() {
         return detallesVentaRepository.findAll();
     }
 
     // Obtener un detalle de venta por ID
-    public Optional<Detalles_Venta> findById(int id) {
+    public Optional<DetallesVenta> findById(int id) {
         return detallesVentaRepository.findById(id);
     }
 
     // Guardar o actualizar un detalle de venta
-    public Detalles_Venta save(Detalles_Venta detallesVenta) {
+    public DetallesVenta save(DetallesVenta detallesVenta) {
         return detallesVentaRepository.save(detallesVenta);
     }
 

@@ -13,6 +13,7 @@
     <h2>Crear Producto</h2>
     <form id="crear-producto-form">
         <input type="text" id="nombre-producto" placeholder="Nombre del producto" required>
+        <input type="number" id="precio-producto" placeholder="Precio del producto" required step="0.01">
         <button type="submit">Crear</button>
     </form>
 
@@ -20,6 +21,7 @@
     <form id="modificar-producto-form">
         <input type="number" id="id-producto-modificar" placeholder="ID del producto" required>
         <input type="text" id="nombre-producto-modificar" placeholder="Nuevo nombre del producto" required>
+        <input type="number" id="precio-producto-modificar" placeholder="Nuevo precio del producto" required step="0.01">
         <button type="submit">Modificar</button>
     </form>
 
@@ -40,7 +42,7 @@
                         lista.innerHTML = '';
                         data.forEach(producto => {
                             const li = document.createElement('li');
-                            li.textContent = `${producto.id} - ${producto.nombre}`;
+                            li.textContent = `${producto.id} - ${producto.nombre} - Precio: $${producto.precio}`;
                             lista.appendChild(li);
                         });
                     });
@@ -51,12 +53,13 @@
             document.getElementById('crear-producto-form').addEventListener('submit', function(event) {
                 event.preventDefault();
                 const nombre = document.getElementById('nombre-producto').value;
+                const precio = document.getElementById('precio-producto').value;
                 fetch('/api/productos', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ nombre })
+                    body: JSON.stringify({ nombre, precio })
                 }).then(response => response.json())
                   .then(() => {
                       cargarProductos();
@@ -68,12 +71,13 @@
                 event.preventDefault();
                 const id = document.getElementById('id-producto-modificar').value;
                 const nombre = document.getElementById('nombre-producto-modificar').value;
+                const precio = document.getElementById('precio-producto-modificar').value;
                 fetch(`/api/productos/${id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ nombre })
+                    body: JSON.stringify({ nombre, precio })
                 }).then(response => {
                     if (response.ok) {
                         cargarProductos();

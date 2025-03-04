@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Ventas</title>
+    <link rel="stylesheet" href="css/ventas.css">
+</head>
+<body>
+    <h1>Lista de Ventas</h1>
+    <ul id="ventas-lista"></ul>
+
+    <h2>Crear Venta</h2>
+    <form id="crear-venta-form">
+        <input type="number" id="id-usuario" placeholder="ID del usuario" required>
+        <input type="date" id="fecha-venta" placeholder="Fecha de la venta" required>
+        <button type="submit">Crear</button>
+    </form>
+
+    <h2>Modificar Venta</h2>
+    <form id="modificar-venta-form">
+        <input type="number" id="id-venta-modificar" placeholder="ID de la venta" required>
+        <input type="number" id="id-usuario-modificar" placeholder="ID del usuario" required>
+        <input type="date" id="fecha-venta-modificar" placeholder="Nueva fecha de la venta" required>
+        <button type="submit">Modificar</button>
+    </form>
+
+    <h2>Eliminar Venta</h2>
+    <form id="eliminar-venta-form">
+        <input type="number" id="id-venta-eliminar" placeholder="ID de la venta" required>
+        <button type="submit">Eliminar</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const lista = document.getElementById('ventas-lista');
+
+            function cargarVentas() {
+                fetch('/api/ventas')
+                    .then(response => response.json())
+                    .then(data => {
+                        lista.innerHTML = '';
+                        data.forEach(venta => {
+                            const li = document.createElement('li');
+                            li.textContent = `${venta.id} - Usuario ID: ${venta.usuario.id} - Fecha: ${venta.fecha}`;
+                            lista.appendChild(li);
+                        });
+                    });
+            }
+
+            cargarVentas();
+
+            document.getElementById('crear-venta-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const idUsuario = document.getElementById('id-usuario').value;
+                const fecha = document.getElementById('fecha-venta').value;
+                fetch('/api/ventas', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ usuario: { id: idUsuario }, fecha })
+                }).then(response => response.json())
+                  .then(() => {
+                      cargarVentas();
+                      document.getElementById('crear-venta-form').reset();
+                  });
+            });
+
+            document.getElementById('modificar-venta-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const id = document.getElementById('id-venta-modificar').value;
+                const idUsuario = document.getElementById('id-usuario-modificar').value;
+                const fecha = document.getElementById('fecha-venta-modificar').value;
+                fetch(`/api/ventas/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ usuario: { id: idUsuario }, fecha })
+                }).then(response => {
+                    if (response.ok) {
+                        cargarVentas();
+                        document.getElementById('modificar-venta-form').reset();
+                    } else {
+                        alert('Venta no encontrada');
+                    }
+                });
+            });
+
+            document.getElementById('eliminar-venta-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const id = document.getElementById('id-venta-eliminar').value;
+                fetch(`/api/ventas/${id}`, {
+                    method: 'DELETE'
+                }).then(response => {
+                    if (response.ok) {
+                        cargarVentas();
+                        document.getElementById('eliminar-venta-form').reset();
+                    } else {
+                        alert('Venta no encontrada');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
