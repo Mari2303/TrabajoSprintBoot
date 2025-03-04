@@ -10,6 +10,6 @@ public class UsuarioPageController {
 
     @GetMapping
     public String usuariosPage() {
-        return "index";
+        return "index.html";
     }
 }
