@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <h1>Gestión de Usuarios</h1>
+    <div id="usuarios-container"></div>
+
+    <h2>Agregar Usuario</h2>
+    <form id="usuario-form">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <button type="submit">Agregar</button>
+    </form>
+
+    <script>
+        async function fetchUsuarios() {
+            const response = await fetch('/api/usuarios');
+            const usuarios = await response.json();
+            const container = document.getElementById('usuarios-container');
+            container.innerHTML = usuarios.map(usuario => `
+                <div class="usuario">
+                    <p>${usuario.nombre}</p>
+                    <button onclick="deleteUsuario(${usuario.id})">Eliminar</button>
+                </div>
+            `).join('');
+        }
+
+        async function deleteUsuario(id) {
+            await fetch(`/api/usuarios/${id}`, { method: 'DELETE' });
+            fetchUsuarios();
+        }
+
+        document.getElementById('usuario-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value;
+            await fetch('/api/usuarios', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nombre })
+            });
+            document.getElementById('usuario-form').reset();
+            fetchUsuarios();
+        });
+
+        fetchUsuarios();
+    </script>
+</body>
+</html>
