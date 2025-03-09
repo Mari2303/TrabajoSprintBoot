@@ -73,7 +73,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ venta: { id: idVenta }, producto: { id: idProducto }, cantidad, precio })
+                    body: JSON.stringify({ venta: { id: idVenta }, producto: { id: idProducto }, cantidad, subtotal: precio })
                 }).then(response => response.json())
                   .then(() => {
                       cargarDetallesVenta();
@@ -93,7 +93,7 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ venta: { id: idVenta }, producto: { id: idProducto }, cantidad, precio })
+                    body: JSON.stringify({ venta: { id: idVenta }, producto: { id: idProducto }, cantidad, subtotal: precio })
                 }).then(response => {
                     if (response.ok) {
                         cargarDetallesVenta();

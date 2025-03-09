@@ -46,14 +46,21 @@
 
             function cargarVentas() {
                 fetch('/api/ventas')
-                    .then(response => response.json())
+                    .then(response => {
+                        console.log('Response status:', response.status);
+                        return response.json();
+                    })
                     .then(data => {
+                        console.log('Data received:', data);
                         lista.innerHTML = '';
                         data.forEach(venta => {
                             const li = document.createElement('li');
                             li.textContent = `${venta.id} - Usuario ID: ${venta.usuario.id} - Fecha: ${venta.fecha}`;
                             lista.appendChild(li);
                         });
+                    })
+                    .catch(error => {
+                        console.error('Error al cargar las ventas:', error);
                     });
             }
 
@@ -61,7 +68,7 @@
 
             document.getElementById('crear-venta-form').addEventListener('submit', function(event) {
                 event.preventDefault();
-                const idUsuario = document.getElementById('id-usuario').value;
+                const idUsuario = parseInt(document.getElementById('id-usuario').value);
                 const fecha = document.getElementById('fecha-venta').value;
                 fetch('/api/ventas', {
                     method: 'POST',
@@ -70,16 +77,20 @@
                     },
                     body: JSON.stringify({ usuario: { id: idUsuario }, fecha })
                 }).then(response => response.json())
-                  .then(() => {
+                  .then(data => {
+                      console.log('Venta creada:', data);
                       cargarVentas();
                       document.getElementById('crear-venta-form').reset();
+                  })
+                  .catch(error => {
+                      console.error('Error al crear la venta:', error);
                   });
             });
 
             document.getElementById('modificar-venta-form').addEventListener('submit', function(event) {
                 event.preventDefault();
-                const id = document.getElementById('id-venta-modificar').value;
-                const idUsuario = document.getElementById('id-usuario-modificar').value;
+                const id = parseInt(document.getElementById('id-venta-modificar').value);
+                const idUsuario = parseInt(document.getElementById('id-usuario-modificar').value);
                 const fecha = document.getElementById('fecha-venta-modificar').value;
                 fetch(`/api/ventas/${id}`, {
                     method: 'PUT',
@@ -89,26 +100,34 @@
                     body: JSON.stringify({ usuario: { id: idUsuario }, fecha })
                 }).then(response => {
                     if (response.ok) {
+                        console.log('Venta modificada');
                         cargarVentas();
                         document.getElementById('modificar-venta-form').reset();
                     } else {
                         alert('Venta no encontrada');
                     }
+                })
+                .catch(error => {
+                    console.error('Error al modificar la venta:', error);
                 });
             });
 
             document.getElementById('eliminar-venta-form').addEventListener('submit', function(event) {
                 event.preventDefault();
-                const id = document.getElementById('id-venta-eliminar').value;
+                const id = parseInt(document.getElementById('id-venta-eliminar').value);
                 fetch(`/api/ventas/${id}`, {
                     method: 'DELETE'
                 }).then(response => {
                     if (response.ok) {
+                        console.log('Venta eliminada');
                         cargarVentas();
                         document.getElementById('eliminar-venta-form').reset();
                     } else {
                         alert('Venta no encontrada');
                     }
+                })
+                .catch(error => {
+                    console.error('Error al eliminar la venta:', error);
                 });
             });
         });
