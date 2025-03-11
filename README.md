@@ -14,8 +14,7 @@ Este es un proyecto de tienda en línea desarrollado con Spring Boot. Permite la
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/tu_usuario/tienda-springboot.git
-   cd tienda-springboot
+   https://github.com/DanielCaicedo26/TrabajoSprintBoot.git
    ```
 
 2. Configurar la base de datos en `application.properties`:
