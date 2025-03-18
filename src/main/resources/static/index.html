@@ -103,17 +103,17 @@
                 });
             });
 
-            document.getElementById('actualizar-numero-documento-form').addEventListener('submit', function(event) {
+             document.getElementById('actualizar-numero-documento-form').addEventListener('submit', function(event) {
                 event.preventDefault();
                 const numeroDocumentoActual = document.getElementById('numero-documento-actual').value;
                 const nuevoNumeroDocumento = document.getElementById('nuevo-numero-documento').value;
-
+            
                 fetch(`/api/usuarios/documento/${numeroDocumentoActual}/actualizar`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(nuevoNumeroDocumento)
+                    body: JSON.stringify({ numeroDocumento: nuevoNumeroDocumento }) // Corregido aquí
                 }).then(response => {
                     if (response.ok) {
                         alert('Número de documento actualizado');

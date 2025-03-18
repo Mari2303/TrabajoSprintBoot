@@ -69,7 +69,7 @@ public class UsuarioController {
     }
 
 // Actualizar un usuario por numero de documento
-@PutMapping("/documento/{numeroDocumento}")
+@PutMapping("/documento/{numeroDocumento}/actualizar")
 public ResponseEntity<Usuario> updateUsuarioByNumeroDocumento(@PathVariable int numeroDocumento, @RequestBody Usuario usuario) {
     try {
         Usuario usuarioActualizado = usuarioService.updateNumeroDocumento(numeroDocumento, usuario.getNumeroDocumento());
@@ -78,6 +78,7 @@ public ResponseEntity<Usuario> updateUsuarioByNumeroDocumento(@PathVariable int 
         return ResponseEntity.notFound().build();
     }
 }
+
     // Eliminar un usuario por numero de documento
     @DeleteMapping("/documento/{numeroDocumento}")
     public ResponseEntity<Void> deleteUsuarioByNumeroDocumento(@PathVariable int numeroDocumento) {
