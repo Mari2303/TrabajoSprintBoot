@@ -57,5 +57,35 @@ public class UsuarioController {
         usuarioService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
-}
 
+    // Buscar un usuario por numero de documento
+    @GetMapping("/documento/{numeroDocumento}")
+    public ResponseEntity<Usuario> getUsuarioByNumeroDocumento(@PathVariable int numeroDocumento) {
+        Usuario usuario = usuarioService.findByNumeroDocumento(numeroDocumento);
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(usuario);
+    }
+
+// Actualizar un usuario por numero de documento
+@PutMapping("/documento/{numeroDocumento}")
+public ResponseEntity<Usuario> updateUsuarioByNumeroDocumento(@PathVariable int numeroDocumento, @RequestBody Usuario usuario) {
+    try {
+        Usuario usuarioActualizado = usuarioService.updateNumeroDocumento(numeroDocumento, usuario.getNumeroDocumento());
+        return ResponseEntity.ok(usuarioActualizado);
+    } catch (IllegalArgumentException e) {
+        return ResponseEntity.notFound().build();
+    }
+}
+    // Eliminar un usuario por numero de documento
+    @DeleteMapping("/documento/{numeroDocumento}")
+    public ResponseEntity<Void> deleteUsuarioByNumeroDocumento(@PathVariable int numeroDocumento) {
+        Usuario usuario = usuarioService.findByNumeroDocumento(numeroDocumento);
+        if (usuario == null) {
+            return ResponseEntity.notFound().build();
+        }
+        usuarioService.deleteByNumeroDocumento(numeroDocumento);
+        return ResponseEntity.noContent().build();
+    }
+}

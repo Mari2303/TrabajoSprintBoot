@@ -16,6 +16,16 @@ public class Usuario {
     private int id;
 
     private String nombre;
+    private int numeroDocumento;
+
+
+    // Getters y Setters
+    public int getNumeroDocumento() {
+        return numeroDocumento;
+    }
+    public void setNumeroDocumento(int numeroDocumento) {
+        this.numeroDocumento = numeroDocumento;
+    }
 
     // Constructor sin argumentos
     public Usuario() {

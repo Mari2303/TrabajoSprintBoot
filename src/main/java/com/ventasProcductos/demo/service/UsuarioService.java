@@ -34,4 +34,28 @@ public class UsuarioService {
     public void deleteById(int id) {
         usuarioRepository.deleteById(id);
     }
+
+    //obtener un usuario por numero de documento
+    public Usuario findByNumeroDocumento(int numeroDocumento) {
+        return usuarioRepository.findByNumeroDocumento(numeroDocumento);
+    }
+   
+    // Actualizar el número de documento de un usuario
+public Usuario updateNumeroDocumento(int numeroDocumento, int nuevoNumeroDocumento) {
+    Usuario usuario = usuarioRepository.findByNumeroDocumento(numeroDocumento);
+    if (usuario == null) {
+        throw new IllegalArgumentException("Usuario no encontrado");
+    }
+    usuario.setNumeroDocumento(nuevoNumeroDocumento);
+    return usuarioRepository.save(usuario);
+}
+    
+    //eliminar un usuario por numero de documento
+    public void deleteByNumeroDocumento(int numeroDocumento) {
+        Usuario usuario = usuarioRepository.findByNumeroDocumento(numeroDocumento);
+        usuarioRepository.delete(usuario);
+    }
+
+    
+
 }

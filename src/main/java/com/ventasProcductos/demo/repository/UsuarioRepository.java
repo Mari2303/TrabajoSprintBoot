@@ -7,4 +7,5 @@ import com.ventasProcductos.demo.model.Usuario;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+    Usuario findByNumeroDocumento(int numeroDocumento);
 }
