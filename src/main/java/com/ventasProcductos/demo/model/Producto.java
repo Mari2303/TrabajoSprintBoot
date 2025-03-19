@@ -20,6 +20,12 @@ public class Producto {
     @Column(name = "precio", nullable = false)
     private double precio;
 
+    @Column(name = "cantidad", nullable = false)
+    private int cantidad;
+
+    @Column(name = "categoria", nullable = false, length = 100)
+    private String categoria;
+
     // Getters y Setters
     public int getId() {
         return id;
@@ -43,5 +49,21 @@ public class Producto {
 
     public void setPrecio(double precio) {
         this.precio = precio;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 }

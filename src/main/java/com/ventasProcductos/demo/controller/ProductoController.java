@@ -39,7 +39,7 @@ public class ProductoController {
     public Producto createProducto(@RequestBody Producto producto) {
         return productoService.save(producto);
     }
-
+    
     @PutMapping("/{id}")
     public ResponseEntity<Producto> updateProducto(@PathVariable int id, @RequestBody Producto producto) {
         if (!productoService.findById(id).isPresent()) {
