@@ -23,6 +23,7 @@
     <form id="crear-usuario-form">
     <input type="text" id="nombre-usuario" placeholder="Nombre del usuario" required>
     <input type="text" id="apellido-usuario" placeholder="Apellido del usuario" required> <!-- Nuevo campo -->
+    <input type="text" id="numero-celular-usuario" placeholder="Número de celular (ej: +XX XXXXXXXXXX)" pattern="\+\d{2} \d{10}" required>
     <input type="number" id="numero-documento-usuario" placeholder="Número de documento" required>
     <button type="submit">Crear</button>
     </form>
@@ -41,6 +42,7 @@
     <input type="number" id="numero-documento-modificar" placeholder="Número de documento" required>
     <input type="text" id="nombre-usuario-modificar-documento" placeholder="Nuevo nombre del usuario" required>
     <input type="text" id="apellido-usuario-modificar-documento" placeholder="Nuevo apellido del usuario" required> <!-- Nuevo campo -->
+    <input type="text" id="numero-celular-modificar-documento" placeholder="Nuevo número de celular (ej: +XX XXXXXXXXXX)" pattern="\+\d{2} \d{10}" required>
     <button type="submit">Modificar</button>
 </form>
 
@@ -62,7 +64,7 @@
                 lista.innerHTML = '';
                 data.forEach(usuario => {
                     const li = document.createElement('li');
-                    li.textContent = `${usuario.id} - ${usuario.nombre} ${usuario.apellido} - Documento: ${usuario.numeroDocumento}`;
+                    li.textContent = `Nombre: ${usuario.nombre}, Apellido: ${usuario.apellido}, Documento: ${usuario.numeroDocumento}, Celular: ${usuario.numeroCelular}`;
                     lista.appendChild(li);
                 });
             });
@@ -76,13 +78,13 @@
         const nombre = document.getElementById('nombre-usuario').value;
         const apellido = document.getElementById('apellido-usuario').value; // Nuevo campo
         const numeroDocumento = document.getElementById('numero-documento-usuario').value;
-
+        const numeroCelular = document.getElementById('numero-celular-usuario').value; // Nuevo campo
         fetch('/api/usuarios', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ nombre, apellido, numeroDocumento }) // Incluir apellido
+            body: JSON.stringify({ nombre, apellido, numeroDocumento,numeroCelular }) // Incluir apellido
         }).then(response => response.json())
           .then(() => {
               cargarUsuarios();
@@ -95,7 +97,7 @@
         const numeroDocumento = document.getElementById('numero-documento-modificar').value;
         const nombre = document.getElementById('nombre-usuario-modificar-documento').value;
         const apellido = document.getElementById('apellido-usuario-modificar-documento').value; // Nuevo campo
-
+        const numeroCelular = document.getElementById('numero-celular-modificar-documento').value; // Nuevo campo
         fetch(`/api/usuarios/documento/${numeroDocumento}/nombre`, {
             method: 'PUT',
             headers: {
@@ -104,7 +106,7 @@
             body: JSON.stringify({ nombre, apellido }) // Incluir apellido
         }).then(response => {
             if (response.ok) {
-                alert('Nombre y apellido actualizados');
+                alert('Nombre,apellido y numerodecelular actualizados');
                 cargarUsuarios();
                 document.getElementById('modificar-nombre-documento-form').reset();
             } else {

@@ -74,9 +74,10 @@ public ResponseEntity<Usuario> updateUsuarioNombreByNumeroDocumento(
         return ResponseEntity.notFound().build();
     }
 
-    // Actualizamos nombre y apellido
+    // Actualizamos nombre, apellido y número de celular
     usuarioExistente.setNombre(usuario.getNombre());
     usuarioExistente.setApellido(usuario.getApellido());
+    usuarioExistente.setNumeroCelular(usuario.getNumeroCelular());
     Usuario usuarioActualizado = usuarioService.save(usuarioExistente);
 
     return ResponseEntity.ok(usuarioActualizado);

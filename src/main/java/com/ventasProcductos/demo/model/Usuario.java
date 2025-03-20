@@ -17,8 +17,16 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private int numeroDocumento;
-    
-    
+    private String numeroCelular; // Nuevo campo
+
+    // Getters y Setters
+    public String getNumeroCelular() {
+        return numeroCelular;
+    }
+
+    public void setNumeroCelular(String numeroCelular) {
+        this.numeroCelular = numeroCelular;
+    }
 
     // Getters y Setters
     public String getApellido() {
