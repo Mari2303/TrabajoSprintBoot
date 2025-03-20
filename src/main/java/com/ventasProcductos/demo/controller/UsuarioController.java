@@ -42,11 +42,16 @@ public class UsuarioController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Usuario> updateUsuario(@PathVariable int id, @RequestBody Usuario usuario) {
-        if (!usuarioService.findById(id).isPresent()) {
+        Optional<Usuario> usuarioExistente = usuarioService.findById(id);
+        if (!usuarioExistente.isPresent()) {
             return ResponseEntity.notFound().build();
         }
-        usuario.setId(id);
-        return ResponseEntity.ok(usuarioService.save(usuario));
+
+        // Solo actualizamos el nombre, manteniendo el número de documento existente
+        Usuario usuarioActualizado = usuarioExistente.get();
+        usuarioActualizado.setNombre(usuario.getNombre());
+
+        return ResponseEntity.ok(usuarioService.save(usuarioActualizado));
     }
 
     @DeleteMapping("/{id}")
@@ -68,16 +73,16 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-// Actualizar un usuario por numero de documento
-@PutMapping("/documento/{numeroDocumento}/actualizar")
-public ResponseEntity<Usuario> updateUsuarioByNumeroDocumento(@PathVariable int numeroDocumento, @RequestBody Usuario usuario) {
-    try {
-        Usuario usuarioActualizado = usuarioService.updateNumeroDocumento(numeroDocumento, usuario.getNumeroDocumento());
-        return ResponseEntity.ok(usuarioActualizado);
-    } catch (IllegalArgumentException e) {
-        return ResponseEntity.notFound().build();
+    // Actualizar un usuario por numero de documento
+    @PutMapping("/documento/{numeroDocumento}/actualizar")
+    public ResponseEntity<Usuario> updateUsuarioByNumeroDocumento(@PathVariable int numeroDocumento, @RequestBody Usuario usuario) {
+        try {
+            Usuario usuarioActualizado = usuarioService.updateNumeroDocumento(numeroDocumento, usuario.getNumeroDocumento());
+            return ResponseEntity.ok(usuarioActualizado);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
-}
 
     // Eliminar un usuario por numero de documento
     @DeleteMapping("/documento/{numeroDocumento}")
