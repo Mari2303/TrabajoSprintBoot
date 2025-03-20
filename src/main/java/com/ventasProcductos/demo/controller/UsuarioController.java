@@ -40,28 +40,6 @@ public class UsuarioController {
         return usuarioService.save(usuario);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable int id, @RequestBody Usuario usuario) {
-        Optional<Usuario> usuarioExistente = usuarioService.findById(id);
-        if (!usuarioExistente.isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        // Solo actualizamos el nombre, manteniendo el número de documento existente
-        Usuario usuarioActualizado = usuarioExistente.get();
-        usuarioActualizado.setNombre(usuario.getNombre());
-
-        return ResponseEntity.ok(usuarioService.save(usuarioActualizado));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUsuario(@PathVariable int id) {
-        if (!usuarioService.findById(id).isPresent()) {
-            return ResponseEntity.notFound().build();
-        }
-        usuarioService.deleteById(id);
-        return ResponseEntity.noContent().build();
-    }
 
     // Buscar un usuario por numero de documento
     @GetMapping("/documento/{numeroDocumento}")
@@ -88,19 +66,21 @@ public ResponseEntity<Usuario> updateNumeroDocumento(
 }
 
 
-    @PutMapping("/documento/{numeroDocumento}/nombre")
-    public ResponseEntity<Usuario> updateUsuarioNombreByNumeroDocumento(@PathVariable int numeroDocumento, @RequestBody Usuario usuario) {
-        Usuario usuarioExistente = usuarioService.findByNumeroDocumento(numeroDocumento);
-        if (usuarioExistente == null) {
-            return ResponseEntity.notFound().build();
-        }
-    
-        // Actualizamos solo el nombre
-        usuarioExistente.setNombre(usuario.getNombre());
-        Usuario usuarioActualizado = usuarioService.save(usuarioExistente);
-    
-        return ResponseEntity.ok(usuarioActualizado);
+@PutMapping("/documento/{numeroDocumento}/nombre")
+public ResponseEntity<Usuario> updateUsuarioNombreByNumeroDocumento(
+        @PathVariable int numeroDocumento, @RequestBody Usuario usuario) {
+    Usuario usuarioExistente = usuarioService.findByNumeroDocumento(numeroDocumento);
+    if (usuarioExistente == null) {
+        return ResponseEntity.notFound().build();
     }
+
+    // Actualizamos nombre y apellido
+    usuarioExistente.setNombre(usuario.getNombre());
+    usuarioExistente.setApellido(usuario.getApellido());
+    Usuario usuarioActualizado = usuarioService.save(usuarioExistente);
+
+    return ResponseEntity.ok(usuarioActualizado);
+}
 
     // Eliminar un usuario por numero de documento
     @DeleteMapping("/documento/{numeroDocumento}")

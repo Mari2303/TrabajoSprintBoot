@@ -17,6 +17,8 @@ public class Usuario {
     private String nombre;
     private String apellido;
     private int numeroDocumento;
+    
+    
 
     // Getters y Setters
     public String getApellido() {
