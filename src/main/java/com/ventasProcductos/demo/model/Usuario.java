@@ -15,7 +15,17 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String nombre;
+    private String apellido;
     private int numeroDocumento;
+
+    // Getters y Setters
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
 
     // Getters y Setters

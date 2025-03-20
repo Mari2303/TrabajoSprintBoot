@@ -73,15 +73,33 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    // Actualizar un usuario por numero de documento
     @PutMapping("/documento/{numeroDocumento}/actualizar")
-    public ResponseEntity<Usuario> updateUsuarioByNumeroDocumento(@PathVariable int numeroDocumento, @RequestBody Usuario usuario) {
-        try {
-            Usuario usuarioActualizado = usuarioService.updateNumeroDocumento(numeroDocumento, usuario.getNumeroDocumento());
-            return ResponseEntity.ok(usuarioActualizado);
-        } catch (IllegalArgumentException e) {
+public ResponseEntity<Usuario> updateNumeroDocumento(
+        @PathVariable int numeroDocumento,
+        @RequestBody int nuevoNumeroDocumento) {
+    try {
+        // Llamamos al servicio para actualizar el número de documento
+        Usuario usuarioActualizado = usuarioService.updateNumeroDocumento(numeroDocumento, nuevoNumeroDocumento);
+        return ResponseEntity.ok(usuarioActualizado);
+    } catch (IllegalArgumentException e) {
+        // Si el usuario no se encuentra, devolvemos un 404
+        return ResponseEntity.notFound().build();
+    }
+}
+
+
+    @PutMapping("/documento/{numeroDocumento}/nombre")
+    public ResponseEntity<Usuario> updateUsuarioNombreByNumeroDocumento(@PathVariable int numeroDocumento, @RequestBody Usuario usuario) {
+        Usuario usuarioExistente = usuarioService.findByNumeroDocumento(numeroDocumento);
+        if (usuarioExistente == null) {
             return ResponseEntity.notFound().build();
         }
+    
+        // Actualizamos solo el nombre
+        usuarioExistente.setNombre(usuario.getNombre());
+        Usuario usuarioActualizado = usuarioService.save(usuarioExistente);
+    
+        return ResponseEntity.ok(usuarioActualizado);
     }
 
     // Eliminar un usuario por numero de documento

@@ -26,18 +26,18 @@
             <button type="submit">Crear</button>
         </form>
 
-        <h2>Modificar Usuario</h2>
-        <form id="modificar-usuario-form">
-            <input type="number" id="id-usuario-modificar" placeholder="ID del usuario" required>
-            <input type="text" id="nombre-usuario-modificar" placeholder="Nuevo nombre del usuario" required>
-            <button type="submit">Modificar</button>
-        </form>
-
         <h2>Actualizar Número de Documento</h2>
         <form id="actualizar-numero-documento-form">
             <input type="number" id="numero-documento-actual" placeholder="Número de documento actual" required>
             <input type="number" id="nuevo-numero-documento" placeholder="Nuevo número de documento" required>
             <button type="submit">Actualizar</button>
+        </form>
+
+        <h2>Modificar Nombre por Número de Documento</h2>
+        <form id="modificar-nombre-documento-form">
+            <input type="number" id="numero-documento-modificar" placeholder="Número de documento" required>
+            <input type="text" id="nombre-usuario-modificar-documento" placeholder="Nuevo nombre del usuario" required>
+            <button type="submit">Modificar</button>
         </form>
 
         <h2>Eliminar Usuario por Número de Documento</h2>
@@ -83,11 +83,34 @@
                   });
             });
 
-            document.getElementById('modificar-usuario-form').addEventListener('submit', function(event) {
+            document.getElementById('actualizar-numero-documento-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const numeroDocumentoActual = document.getElementById('numero-documento-actual').value;
+    const nuevoNumeroDocumento = document.getElementById('nuevo-numero-documento').value;
+
+    fetch(`/api/usuarios/documento/${numeroDocumentoActual}/actualizar`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(nuevoNumeroDocumento) // Enviar solo el número
+    }).then(response => {
+        if (response.ok) {
+            alert('Número de documento actualizado');
+            cargarUsuarios();
+            document.getElementById('actualizar-numero-documento-form').reset();
+        } else {
+            alert('Usuario no encontrado');
+        }
+    });
+});
+
+            document.getElementById('modificar-nombre-documento-form').addEventListener('submit', function(event) {
                 event.preventDefault();
-                const id = document.getElementById('id-usuario-modificar').value;
-                const nombre = document.getElementById('nombre-usuario-modificar').value;
-                fetch(`/api/usuarios/${id}`, {
+                const numeroDocumento = document.getElementById('numero-documento-modificar').value;
+                const nombre = document.getElementById('nombre-usuario-modificar-documento').value;
+
+                fetch(`/api/usuarios/documento/${numeroDocumento}/nombre`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
@@ -95,30 +118,9 @@
                     body: JSON.stringify({ nombre })
                 }).then(response => {
                     if (response.ok) {
+                        alert('Nombre actualizado');
                         cargarUsuarios();
-                        document.getElementById('modificar-usuario-form').reset();
-                    } else {
-                        alert('Usuario no encontrado');
-                    }
-                });
-            });
-
-             document.getElementById('actualizar-numero-documento-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const numeroDocumentoActual = document.getElementById('numero-documento-actual').value;
-                const nuevoNumeroDocumento = document.getElementById('nuevo-numero-documento').value;
-            
-                fetch(`/api/usuarios/documento/${numeroDocumentoActual}/actualizar`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ numeroDocumento: nuevoNumeroDocumento }) // Corregido aquí
-                }).then(response => {
-                    if (response.ok) {
-                        alert('Número de documento actualizado');
-                        cargarUsuarios();
-                        document.getElementById('actualizar-numero-documento-form').reset();
+                        document.getElementById('modificar-nombre-documento-form').reset();
                     } else {
                         alert('Usuario no encontrado');
                     }
