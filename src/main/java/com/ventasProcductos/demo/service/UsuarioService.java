@@ -20,6 +20,10 @@ public class UsuarioService {
         return usuarioRepository.findAll();
     }
 
+    public List<Usuario> searchUsuarios(String keyword) {
+        return usuarioRepository.searchUsuarios(keyword);
+    }
+
     // Obtener un usuario por ID
     public Optional<Usuario> findById(int id) {
         return usuarioRepository.findById(id);
