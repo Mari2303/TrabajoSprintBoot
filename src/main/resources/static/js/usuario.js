@@ -28,24 +28,37 @@ document.addEventListener('DOMContentLoaded', function() {
             cargarUsuarios();
 
            // Crear usuario
-    document.getElementById('crear-usuario-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const nombre = document.getElementById('nombre-usuario').value;
-        const apellido = document.getElementById('apellido-usuario').value; // Nuevo campo
-        const numeroDocumento = document.getElementById('numero-documento-usuario').value;
-        const numeroCelular = document.getElementById('numero-celular-usuario').value; // Nuevo campo
-        fetch('/api/usuarios', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ nombre, apellido, numeroDocumento,numeroCelular }) // Incluir apellido
-        }).then(response => response.json())
-          .then(() => {
-              cargarUsuarios();
-              document.getElementById('crear-usuario-form').reset();
-          });
-    });
+           document.getElementById('crear-usuario-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+        
+            const nombre = document.getElementById('nombre-usuario').value;
+            const apellido = document.getElementById('apellido-usuario').value;
+            const numeroDocumento = document.getElementById('numero-documento-usuario').value;
+            const numeroCelular = document.getElementById('numero-celular-usuario').value;
+        
+            fetch('/api/usuarios', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nombre, apellido, numeroDocumento, numeroCelular })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.text().then(text => { throw new Error(text); });
+                }
+                return response.json();
+            })
+            .then(() => {
+                alert("Usuario creado exitosamente");
+                cargarUsuarios(); // Recargar la lista de usuarios
+                document.getElementById('crear-usuario-form').reset();
+            })
+            .catch(error => {
+                alert("Error: " + error.message);
+            });
+        });
+        
 
     document.getElementById('modificar-nombre-documento-form').addEventListener('submit', function(event) {
     event.preventDefault();

@@ -2,6 +2,7 @@ package com.ventasProcductos.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +17,9 @@ public class Usuario {
     private int id;
     private String nombre;
     private String apellido;
+     @Column(unique = true)
     private int numeroDocumento;
+    
     private String numeroCelular; // Nuevo campo
 
     // Getters y Setters

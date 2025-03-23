@@ -29,8 +29,12 @@ public class UsuarioService {
         return usuarioRepository.findById(id);
     }
 
-    // Guardar o actualizar un usuario
     public Usuario save(Usuario usuario) {
+        // Verificar si el número de documento ya existe
+        if (usuarioRepository.findByNumeroDocumento(usuario.getNumeroDocumento()) != null) {
+            throw new IllegalArgumentException("El número de documento ya está registrado.");
+        }
+
         return usuarioRepository.save(usuario);
     }
 
@@ -38,6 +42,8 @@ public class UsuarioService {
     public void deleteById(int id) {
         usuarioRepository.deleteById(id);
     }
+
+    
 
     //obtener un usuario por numero de documento
     public Usuario findByNumeroDocumento(int numeroDocumento) {
