@@ -4,159 +4,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestión de Usuarios</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    <nav class="navbar">
-        <a href="http://localhost:8080/index.html">Usuario</a>
-        <a href="http://localhost:8080/pagos.html">Pago</a>
-        <a href="http://localhost:8080/detalles_venta.html">Detallesventa</a>
-        <a href="http://localhost:8080/productos">Productos</a>
-        <a href="http://localhost:8080/ventas.html">Ventas</a>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="http://localhost:8080/index.html">Gestión de Usuarios</a>
+            <a class="navbar-brand" href="http://localhost:8080/pagos.html">Pago</a>
+            <a class="navbar-brand" href="http://localhost:8080/detalles_venta.html">Detallesventa</a>
+            <a class="navbar-brand" href="http://localhost:8080/productos">Productos</a>
+            <a class="navbar-brand" href="http://localhost:8080/ventas.html">Ventas</a>
+            
+        </div>
     </nav>
 
     <div class="container">
-        <h1>Lista de Usuarios</h1>
-        <ul id="usuarios-lista"></ul>
-
-        <h2>Crear Usuario</h2>
-    <form id="crear-usuario-form">
-    <input type="text" id="nombre-usuario" placeholder="Nombre del usuario" required>
-    <input type="text" id="apellido-usuario" placeholder="Apellido del usuario" required> <!-- Nuevo campo -->
-    <input type="text" id="numero-celular-usuario" placeholder="Número de celular (ej: +XX XXXXXXXXXX)" pattern="\+\d{2} \d{10}" required>
-    <input type="number" id="numero-documento-usuario" placeholder="Número de documento" required>
-    <button type="submit">Crear</button>
-    </form>
-
-
-        <h2>Actualizar Número de Documento</h2>
-        <form id="actualizar-numero-documento-form">
-            <input type="number" id="numero-documento-actual" placeholder="Número de documento actual" required>
-            <input type="number" id="nuevo-numero-documento" placeholder="Nuevo número de documento" required>
-            <button type="submit">Actualizar</button>
-        </form>
-
-
-<h2>Modificar Nombre y Apellido por Número de Documento</h2>
-<form id="modificar-nombre-documento-form">
-    <input type="number" id="numero-documento-modificar" placeholder="Número de documento" required>
-    <input type="text" id="nombre-usuario-modificar-documento" placeholder="Nuevo nombre del usuario" required>
-    <input type="text" id="apellido-usuario-modificar-documento" placeholder="Nuevo apellido del usuario" required> <!-- Nuevo campo -->
-    <input type="text" id="numero-celular-modificar-documento" placeholder="Nuevo número de celular (ej: +XX XXXXXXXXXX)" pattern="\+\d{2} \d{10}" required>
-    <button type="submit">Modificar</button>
-</form>
-
-        <h2>Eliminar Usuario por Número de Documento</h2>
-        <form id="eliminar-usuario-documento-form">
-            <input type="number" id="numero-documento-eliminar" placeholder="Número de documento" required>
-            <button type="submit">Eliminar</button>
-        </form>
+        <!-- Lista de Usuarios -->
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                <h2 class="card-title">Lista de Usuarios</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Documento</th>
+                            <th>Celular</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usuarios-lista">
+                        <!-- Aquí se cargarán los usuarios -->
+                    </tbody>
+                </table>
+                <!-- Botones para abrir modales -->
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearUsuarioModal">Crear Usuario</button>
+                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modificarUsuarioModal">Modificar Usuario</button>
+                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#actualizarDocumentoModal">Actualizar Documento</button>
+                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal">Eliminar Usuario</button>
+            </div>
+        </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    const lista = document.getElementById('usuarios-lista');
+    <!-- Modales -->
 
-    function cargarUsuarios() {
-        fetch('/api/usuarios')
-            .then(response => response.json())
-            .then(data => {
-                lista.innerHTML = '';
-                data.forEach(usuario => {
-                    const li = document.createElement('li');
-                    li.textContent = ` Id: ${usuario.id}, Nombre: ${usuario.nombre}, Apellido: ${usuario.apellido}, Documento: ${usuario.numeroDocumento}, Celular: ${usuario.numeroCelular}`;
-                    lista.appendChild(li);
-                });
-            });
-    }
+    <!-- Modal Crear Usuario -->
+    <div class="modal fade" id="crearUsuarioModal" tabindex="-1" aria-labelledby="crearUsuarioModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="crearUsuarioModalLabel">Crear Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="crear-usuario-form">
+                        <div class="mb-3">
+                            <label for="nombre-usuario" class="form-label">Nombre</label>
+                            <input type="text" id="nombre-usuario" class="form-control" placeholder="Nombre del usuario" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellido-usuario" class="form-label">Apellido</label>
+                            <input type="text" id="apellido-usuario" class="form-control" placeholder="Apellido del usuario" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="numero-celular-usuario" class="form-label">Número de Celular</label>
+                            <input type="text" id="numero-celular-usuario" class="form-control" placeholder="Ej: +XX XXXXXXXXXX" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="numero-documento-usuario" class="form-label">Número de Documento</label>
+                            <input type="number" id="numero-documento-usuario" class="form-control" placeholder="Número de documento" required>
+                        </div>
+                        <button type="submit" class="btn btn-success">Crear</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-            cargarUsuarios();
+    <!-- Modal Modificar Usuario -->
+    <div class="modal fade" id="modificarUsuarioModal" tabindex="-1" aria-labelledby="modificarUsuarioModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title" id="modificarUsuarioModalLabel">Modificar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="modificar-nombre-documento-form">
+                        <div class="mb-3">
+                            <label for="numero-documento-modificar" class="form-label">Número de Documento</label>
+                            <input type="number" id="numero-documento-modificar" class="form-control" placeholder="Número de documento" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nombre-usuario-modificar-documento" class="form-label">Nuevo Nombre</label>
+                            <input type="text" id="nombre-usuario-modificar-documento" class="form-control" placeholder="Nuevo nombre del usuario" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="apellido-usuario-modificar-documento" class="form-label">Nuevo Apellido</label>
+                            <input type="text" id="apellido-usuario-modificar-documento" class="form-control" placeholder="Nuevo apellido del usuario" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="numero-celular-modificar-documento" class="form-label">Nuevo Número de Celular</label>
+                            <input type="text" id="numero-celular-modificar-documento" class="form-control" placeholder="Ej: +XX XXXXXXXXXX" required>
+                        </div>
+                        <button type="submit" class="btn btn-info">Modificar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-           // Crear usuario
-    document.getElementById('crear-usuario-form').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const nombre = document.getElementById('nombre-usuario').value;
-        const apellido = document.getElementById('apellido-usuario').value; // Nuevo campo
-        const numeroDocumento = document.getElementById('numero-documento-usuario').value;
-        const numeroCelular = document.getElementById('numero-celular-usuario').value; // Nuevo campo
-        fetch('/api/usuarios', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ nombre, apellido, numeroDocumento,numeroCelular }) // Incluir apellido
-        }).then(response => response.json())
-          .then(() => {
-              cargarUsuarios();
-              document.getElementById('crear-usuario-form').reset();
-          });
-    });
+    <!-- Modal Actualizar Documento -->
+    <div class="modal fade" id="actualizarDocumentoModal" tabindex="-1" aria-labelledby="actualizarDocumentoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title" id="actualizarDocumentoModalLabel">Actualizar Documento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="actualizar-numero-documento-form">
+                        <div class="mb-3">
+                            <label for="numero-documento-actual" class="form-label">Número de Documento Actual</label>
+                            <input type="number" id="numero-documento-actual" class="form-control" placeholder="Número de documento actual" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nuevo-numero-documento" class="form-label">Nuevo Número de Documento</label>
+                            <input type="number" id="nuevo-numero-documento" class="form-control" placeholder="Nuevo número de documento" required>
+                        </div>
+                        <button type="submit" class="btn btn-warning">Actualizar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    document.getElementById('modificar-nombre-documento-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const numeroDocumento = document.getElementById('numero-documento-modificar').value;
-    const nombre = document.getElementById('nombre-usuario-modificar-documento').value;
-    const apellido = document.getElementById('apellido-usuario-modificar-documento').value;
-    const numeroCelular = document.getElementById('numero-celular-modificar-documento').value;
+    <!-- Modal Eliminar Usuario -->
+    <div class="modal fade" id="eliminarUsuarioModal" tabindex="-1" aria-labelledby="eliminarUsuarioModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="eliminarUsuarioModalLabel">Eliminar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="eliminar-usuario-documento-form">
+                        <div class="mb-3">
+                            <label for="numero-documento-eliminar" class="form-label">Número de Documento</label>
+                            <input type="number" id="numero-documento-eliminar" class="form-control" placeholder="Número de documento" required>
+                        </div>
+                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    fetch(`/api/usuarios/documento/${numeroDocumento}/nombre`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ nombre, apellido, numeroCelular })
-    }).then(response => {
-        if (response.ok) {
-            alert('Usuario actualizado correctamente');
-            cargarUsuarios();
-            document.getElementById('modificar-nombre-documento-form').reset();
-        } else {
-            alert('Usuario no encontrado');
-        }
-    });
-});
-
-            
-// modificar nuemro de documento por uno nuevo 
-document.getElementById('actualizar-numero-documento-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const numeroDocumentoActual = document.getElementById('numero-documento-actual').value;
-    const nuevoNumeroDocumento = document.getElementById('nuevo-numero-documento').value;
-
-    fetch(`/api/usuarios/documento/${numeroDocumentoActual}/actualizar`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(nuevoNumeroDocumento) // Enviar solo el número
-    }).then(response => {
-        if (response.ok) {
-            alert('Número de documento actualizado');
-            cargarUsuarios();
-            document.getElementById('actualizar-numero-documento-form').reset();
-        } else {
-            alert('Usuario no encontrado');
-        }
-    });
-});
-// eliminar con numero de documento
-            document.getElementById('eliminar-usuario-documento-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const numeroDocumento = document.getElementById('numero-documento-eliminar').value;
-
-                fetch(`/api/usuarios/documento/${numeroDocumento}`, {
-                    method: 'DELETE'
-                }).then(response => {
-                    if (response.ok) {
-                        alert('Usuario eliminado');
-                        cargarUsuarios();
-                        document.getElementById('eliminar-usuario-documento-form').reset();
-                    } else {
-                        alert('Usuario no encontrado');
-                    }
-                });
-            });
-        });
-    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/usuario.js"></script>
 </body>
 </html>
