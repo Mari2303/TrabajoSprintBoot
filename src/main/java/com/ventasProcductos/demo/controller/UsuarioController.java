@@ -71,22 +71,7 @@ public ResponseEntity<Usuario> updateNumeroDocumento(
 }
 
 
-@PutMapping("/documento/{numeroDocumento}/nombre")
-public ResponseEntity<Usuario> updateUsuarioNombreByNumeroDocumento(
-        @PathVariable int numeroDocumento, @RequestBody Usuario usuario) {
-    Usuario usuarioExistente = usuarioService.findByNumeroDocumento(numeroDocumento);
-    if (usuarioExistente == null) {
-        return ResponseEntity.notFound().build();
-    }
 
-    // Actualizamos nombre, apellido y número de celular
-    usuarioExistente.setNombre(usuario.getNombre());
-    usuarioExistente.setApellido(usuario.getApellido());
-    usuarioExistente.setNumeroCelular(usuario.getNumeroCelular()); // Asegúrate de incluir esto
-    Usuario usuarioActualizado = usuarioService.save(usuarioExistente);
-
-    return ResponseEntity.ok(usuarioActualizado);
-}
 
     // Eliminar un usuario por numero de documento
     @DeleteMapping("/documento/{numeroDocumento}")

@@ -59,32 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
         
-
-    document.getElementById('modificar-nombre-documento-form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    const numeroDocumento = document.getElementById('numero-documento-modificar').value;
-    const nombre = document.getElementById('nombre-usuario-modificar-documento').value;
-    const apellido = document.getElementById('apellido-usuario-modificar-documento').value;
-    const numeroCelular = document.getElementById('numero-celular-modificar-documento').value;
-
-    fetch(`/api/usuarios/documento/${numeroDocumento}/nombre`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ nombre, apellido, numeroCelular })
-    }).then(response => {
-        if (response.ok) {
-            alert('Usuario actualizado correctamente');
-            cargarUsuarios();
-            document.getElementById('modificar-nombre-documento-form').reset();
-        } else {
-            alert('Usuario no encontrado');
-        }
-    });
-});
-
-            
+        
 // modificar nuemro de documento por uno nuevo 
 document.getElementById('actualizar-numero-documento-form').addEventListener('submit', function(event) {
     event.preventDefault();

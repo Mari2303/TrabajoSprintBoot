@@ -19,7 +19,7 @@ public class UsuarioService {
     public List<Usuario> findAll() {
         return usuarioRepository.findAll();
     }
-
+    //bucar usuarios por nombre, apellido, numero de documento y numero de celular
     public List<Usuario> searchUsuarios(String keyword) {
         return usuarioRepository.searchUsuarios(keyword);
     }
