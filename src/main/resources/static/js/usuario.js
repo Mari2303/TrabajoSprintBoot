@@ -1,11 +1,10 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const lista = document.getElementById('usuarios-lista');
 
     function cargarUsuarios() {
         fetch('/api/usuarios')
             .then(response => response.json())
             .then(data => {
-                const lista = document.getElementById('usuarios-lista');
                 lista.innerHTML = ''; // Limpiar la tabla antes de llenarla
                 data.forEach(usuario => {
                     const fila = document.createElement('tr');
@@ -15,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         <td>${usuario.apellido}</td>
                         <td>${usuario.numeroDocumento}</td>
                         <td>${usuario.numeroCelular}</td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" onclick="mostrarEditarModal(${usuario.id}, '${usuario.nombre}', '${usuario.apellido}', '${usuario.numeroCelular}')">Modificar</button>
+                        </td>
                     `;
                     lista.appendChild(fila);
                 });
@@ -58,6 +60,52 @@ document.addEventListener('DOMContentLoaded', function() {
                 alert("Error: " + error.message);
             });
         });
+
+         // Mostrar el modal de edición con los datos del usuario
+    window.mostrarEditarModal = function (id, nombre, apellido, numeroCelular) {
+        document.getElementById('editar-id').value = id;
+        document.getElementById('editar-nombre').value = nombre;
+        document.getElementById('editar-apellido').value = apellido;
+        document.getElementById('editar-numero-celular').value = numeroCelular;
+        const modal = new bootstrap.Modal(document.getElementById('editarUsuarioModal'));
+        modal.show();
+    };
+
+    document.getElementById('editar-usuario-form').addEventListener('submit', function (event) {
+        event.preventDefault();
+    
+        const id = document.getElementById('editar-id').value;
+        const nombre = document.getElementById('editar-nombre').value;
+        const apellido = document.getElementById('editar-apellido').value;
+        const numeroCelular = document.getElementById('editar-numero-celular').value;
+    
+        // Verificar los datos antes de enviarlos
+        console.log("Datos enviados al servidor:", { id, nombre, apellido, numeroCelular });
+    
+        fetch(`/api/usuarios/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ nombre, apellido, numeroCelular })
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al actualizar el usuario');
+                }
+                return response.json();
+            })
+            .then(() => {
+                alert('Usuario actualizado con éxito');
+                cargarUsuarios(); // Recargar la lista de usuarios
+                const modal = bootstrap.Modal.getInstance(document.getElementById('editarUsuarioModal'));
+                modal.hide();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('No se pudo actualizar el usuario.');
+            });
+    });
         
         
 // modificar nuemro de documento por uno nuevo 
@@ -99,7 +147,7 @@ document.getElementById('actualizar-numero-documento-form').addEventListener('su
                     }
                 });
             });
-        });
+        
         function buscarUsuario() {
             const keyword = document.getElementById('busqueda').value.trim();
         
@@ -133,3 +181,4 @@ document.getElementById('actualizar-numero-documento-form').addEventListener('su
                 .catch(error => console.error('Error al buscar usuarios:', error));
         }
         
+    });

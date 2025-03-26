@@ -42,7 +42,6 @@
                 </table>
                 <!-- Botones para abrir modales -->
                 <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearUsuarioModal">Crear Usuario</button>
-                <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modificarUsuarioModal">Modificar Usuario</button>
                 <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#actualizarDocumentoModal">Actualizar Documento</button>
                 <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal">Eliminar Usuario</button>
                 <input type="text" id="busqueda" placeholder="Buscar usuario...">
@@ -83,6 +82,36 @@
                             <input type="number" id="numero-documento-usuario" class="form-control" placeholder="Número de documento" required>
                         </div>
                         <button type="submit" class="btn btn-success">Crear</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- Modal Editar Usuario -->
+    <div class="modal fade" id="editarUsuarioModal" tabindex="-1" aria-labelledby="editarUsuarioModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="editarUsuarioModalLabel">Editar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editar-usuario-form">
+                        <input type="hidden" id="editar-id">
+                        <div class="mb-3">
+                            <label for="editar-nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="editar-nombre" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editar-apellido" class="form-label">Apellido</label>
+                            <input type="text" class="form-control" id="editar-apellido" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editar-numero-celular" class="form-label">Número de Celular</label>
+                            <input type="text" class="form-control" id="editar-numero-celular" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                     </form>
                 </div>
             </div>

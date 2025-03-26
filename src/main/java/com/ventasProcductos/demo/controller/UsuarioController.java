@@ -98,4 +98,31 @@ public ResponseEntity<Usuario> updateNumeroDocumento(
     public ResponseEntity<String> handleConstraintViolation(DataIntegrityViolationException ex) {
         return ResponseEntity.badRequest().body("El número de documento ya está registrado.");
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateUsuario(
+            @PathVariable int id,
+            @RequestBody Usuario usuarioActualizado) {
+        try {
+            System.out.println("ID recibido: " + id);
+            System.out.println("Datos recibidos: " + usuarioActualizado);
+    
+            Optional<Usuario> usuarioOptional = usuarioService.findById(id);
+            if (usuarioOptional.isPresent()) {
+                Usuario usuario = usuarioOptional.get();
+                usuario.setNombre(usuarioActualizado.getNombre());
+                usuario.setApellido(usuarioActualizado.getApellido());
+                usuario.setNumeroCelular(usuarioActualizado.getNumeroCelular());
+                Usuario usuarioGuardado = usuarioService.save(usuario);
+                System.out.println("Usuario actualizado: " + usuarioGuardado);
+                return ResponseEntity.ok(usuarioGuardado);
+            } else {
+                return ResponseEntity.status(404).body("Usuario no encontrado con ID: " + id);
+            }
+        } catch (Exception e) {
+            e.printStackTrace(); // Imprime el error en los logs
+            return ResponseEntity.status(500).body("Error interno del servidor: " + e.getMessage());
+        }
+    }
+
 }

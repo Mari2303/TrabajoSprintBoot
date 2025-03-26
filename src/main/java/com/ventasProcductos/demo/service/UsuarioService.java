@@ -30,11 +30,10 @@ public class UsuarioService {
     }
 
     public Usuario save(Usuario usuario) {
-        // Verificar si el número de documento ya existe
-        if (usuarioRepository.findByNumeroDocumento(usuario.getNumeroDocumento()) != null) {
+        // Verificar si el número de documento ya existe solo si es un nuevo usuario
+        if (usuario.getId() == 0 && usuarioRepository.findByNumeroDocumento(usuario.getNumeroDocumento()) != null) {
             throw new IllegalArgumentException("El número de documento ya está registrado.");
         }
-
         return usuarioRepository.save(usuario);
     }
 
@@ -65,6 +64,8 @@ public Usuario updateNumeroDocumento(int numeroDocumento, int nuevoNumeroDocumen
         Usuario usuario = usuarioRepository.findByNumeroDocumento(numeroDocumento);
         usuarioRepository.delete(usuario);
     }
+
+    
 
     
 
