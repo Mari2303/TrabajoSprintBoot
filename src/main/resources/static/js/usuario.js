@@ -148,37 +148,38 @@ document.getElementById('actualizar-numero-documento-form').addEventListener('su
                 });
             });
         
-        function buscarUsuario() {
-            const keyword = document.getElementById('busqueda').value.trim();
-        
-            if (keyword === "") {
-                alert("Ingrese un término de búsqueda.");
-                return;
-            }
-        
-            fetch(`/api/usuarios/buscar?keyword=${encodeURIComponent(keyword)}`)
-                .then(response => response.json())
-                .then(data => {
-                    const tbody = document.getElementById("usuarios-lista");
-                    tbody.innerHTML = ""; // Limpiar la tabla antes de mostrar los resultados
-        
-                    if (data.length === 0) {
-                        tbody.innerHTML = "<tr><td colspan='5' class='text-center'>No se encontraron usuarios</td></tr>";
-                        return;
-                    }
-        
-                    data.forEach(usuario => {
-                        const fila = `<tr>
-                            <td>${usuario.id}</td>
-                            <td>${usuario.nombre}</td>
-                            <td>${usuario.apellido}</td>
-                            <td>${usuario.numeroDocumento}</td>
-                            <td>${usuario.numeroCelular}</td>
-                        </tr>`;
-                        tbody.innerHTML += fila;
-                    });
-                })
-                .catch(error => console.error('Error al buscar usuarios:', error));
-        }
         
     });
+    function buscarUsuario() {
+        const keyword = document.getElementById('busqueda').value.trim();
+    
+        if (keyword === "") {
+            alert("Ingrese un término de búsqueda.");
+            return;
+        }
+    
+        fetch(`/api/usuarios/buscar?keyword=${encodeURIComponent(keyword)}`)
+            .then(response => response.json())
+            .then(data => {
+                const tbody = document.getElementById("usuarios-lista");
+                tbody.innerHTML = ""; // Limpiar la tabla antes de mostrar los resultados
+    
+                if (data.length === 0) {
+                    tbody.innerHTML = "<tr><td colspan='5' class='text-center'>No se encontraron usuarios</td></tr>";
+                    return;
+                }
+    
+                data.forEach(usuario => {
+                    const fila = `<tr>
+                        <td>${usuario.id}</td>
+                        <td>${usuario.nombre}</td>
+                        <td>${usuario.apellido}</td>
+                        <td>${usuario.numeroDocumento}</td>
+                        <td>${usuario.numeroCelular}</td>
+                    </tr>`;
+                    tbody.innerHTML += fila;
+                });
+            })
+            .catch(error => console.error('Error al buscar usuarios:', error));
+    }
+    
