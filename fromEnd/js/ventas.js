@@ -12,15 +12,25 @@ document.addEventListener('DOMContentLoaded', function () {
                     fila.innerHTML = `
                         <td>${venta.id}</td>
                         <td>${venta.usuario.id}</td>
+                        <td>${venta.usuario.nombre}</td>
                         <td>${venta.fecha}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary me-2" 
+                                onclick="mostrarModificarModal(${venta.id}, ${venta.usuario.id}, '${venta.fecha}')">
+                                Modificar
+                            </button>
+                            <button class="btn btn-sm btn-danger" 
+                                onclick="eliminarVenta(${venta.id})">
+                                Eliminar
+                            </button>
+                        </td>
                     `;
                     lista.appendChild(fila);
-                    
                 });
             })
             .catch(error => console.error('Error al cargar las ventas:', error));
     }
-
+    
     cargarVentas();
 
     document.getElementById('crear-venta-form').addEventListener('submit', function (event) {
