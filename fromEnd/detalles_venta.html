@@ -15,110 +15,35 @@
         <a class="navbar-brand" href="ventas.html">Ventas</a>
     </nav>
     <div class="container">
-    <h1>Lista de Detalles de Venta</h1>
-    <ul id="detalles-venta-lista"></ul>
+        <h1>Lista de Detalles de Venta</h1>
+        <ul id="detalles-venta-lista"></ul>
 
-    <h2>Crear Detalle de Venta</h2>
-    <form id="crear-detalle-venta-form">
-        <input type="number" id="id-venta" placeholder="ID de la venta" required>
-        <input type="number" id="id-producto" placeholder="ID del producto" required>
-        <input type="number" id="cantidad" placeholder="Cantidad" required>
-        <input type="number" id="precio" placeholder="Precio" required step="0.01">
-        <button type="submit">Crear</button>
-    </form>
+        <h2>Crear Detalle de Venta</h2>
+        <form id="crear-detalle-venta-form">
+            <input type="number" id="id-venta" placeholder="ID de la venta" required>
+            <input type="number" id="id-producto" placeholder="ID del producto" required>
+            <input type="number" id="cantidad" placeholder="Cantidad" required>
+            <input type="number" id="precio" placeholder="Precio" required step="0.01">
+            <button type="submit">Crear</button>
+        </form>
 
-    <h2>Modificar Detalle de Venta</h2>
-    <form id="modificar-detalle-venta-form">
-        <input type="number" id="id-detalle-venta-modificar" placeholder="ID del detalle de venta" required>
-        <input type="number" id="id-venta-modificar" placeholder="ID de la venta" required>
-        <input type="number" id="id-producto-modificar" placeholder="ID del producto" required>
-        <input type="number" id="cantidad-modificar" placeholder="Cantidad" required>
-        <input type="number" id="precio-modificar" placeholder="Precio" required step="0.01">
-        <button type="submit">Modificar</button>
-    </form>
+        <h2>Modificar Detalle de Venta</h2>
+        <form id="modificar-detalle-venta-form">
+            <input type="number" id="id-detalle-venta-modificar" placeholder="ID del detalle de venta" required>
+            <input type="number" id="id-venta-modificar" placeholder="ID de la venta" required>
+            <input type="number" id="id-producto-modificar" placeholder="ID del producto" required>
+            <input type="number" id="cantidad-modificar" placeholder="Cantidad" required>
+            <input type="number" id="precio-modificar" placeholder="Precio" required step="0.01">
+            <button type="submit">Modificar</button>
+        </form>
 
-    <h2>Eliminar Detalle de Venta</h2>
-    <form id="eliminar-detalle-venta-form">
-        <input type="number" id="id-detalle-venta-eliminar" placeholder="ID del detalle de venta" required>
-        <button type="submit">Eliminar</button>
-    </form>
+        <h2>Eliminar Detalle de Venta</h2>
+        <form id="eliminar-detalle-venta-form">
+            <input type="number" id="id-detalle-venta-eliminar" placeholder="ID del detalle de venta" required>
+            <button type="submit">Eliminar</button>
+        </form>
+    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const lista = document.getElementById('detalles-venta-lista');
-
-            function cargarDetallesVenta() {
-                fetch('/api/detalles_venta')
-                    .then(response => response.json())
-                    .then(data => {
-                        lista.innerHTML = '';
-                        data.forEach(detalle => {
-                            const li = document.createElement('li');
-                            li.textContent = `${detalle.id} - Venta ID: ${detalle.venta.id} - Producto ID: ${detalle.producto.id} - Cantidad: ${detalle.cantidad} - Precio: $${detalle.precio}`;
-                            lista.appendChild(li);
-                        });
-                    });
-            }
-
-            cargarDetallesVenta();
-
-            document.getElementById('crear-detalle-venta-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const idVenta = document.getElementById('id-venta').value;
-                const idProducto = document.getElementById('id-producto').value;
-                const cantidad = document.getElementById('cantidad').value;
-                const precio = document.getElementById('precio').value;
-                fetch('/api/detalles_venta', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ venta: { id: idVenta }, producto: { id: idProducto }, cantidad, subtotal: precio })
-                }).then(response => response.json())
-                  .then(() => {
-                      cargarDetallesVenta();
-                      document.getElementById('crear-detalle-venta-form').reset();
-                  });
-            });
-
-            document.getElementById('modificar-detalle-venta-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const id = document.getElementById('id-detalle-venta-modificar').value;
-                const idVenta = document.getElementById('id-venta-modificar').value;
-                const idProducto = document.getElementById('id-producto-modificar').value;
-                const cantidad = document.getElementById('cantidad-modificar').value;
-                const precio = document.getElementById('precio-modificar').value;
-                fetch(`/api/detalles_venta/${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ venta: { id: idVenta }, producto: { id: idProducto }, cantidad, subtotal: precio })
-                }).then(response => {
-                    if (response.ok) {
-                        cargarDetallesVenta();
-                        document.getElementById('modificar-detalle-venta-form').reset();
-                    } else {
-                        alert('Detalle de venta no encontrado');
-                    }
-                });
-            });
-
-            document.getElementById('eliminar-detalle-venta-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const id = document.getElementById('id-detalle-venta-eliminar').value;
-                fetch(`/api/detalles_venta/${id}`, {
-                    method: 'DELETE'
-                }).then(response => {
-                    if (response.ok) {
-                        cargarDetallesVenta();
-                        document.getElementById('eliminar-detalle-venta-form').reset();
-                    } else {
-                        alert('Detalle de venta no encontrado');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="/fromEnd/js/detallesventa.js"></script>
 </body>
 </html>

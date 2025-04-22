@@ -9,137 +9,61 @@
 <body>
 
     <nav class="navbar">
-        <a class="navbar-brand" href="index.html">Gestión de Usuarios</a>
-            <a class="navbar-brand" href="pagos.html">Pagos</a>
-            <a class="navbar-brand" href="detalles_venta.html">Detalles Venta</a>
-            <a class="navbar-brand" href="productos.html">Productos</a>
-            <a class="navbar-brand" href="ventas.html">Ventas</a>
+        <a href="http://localhost:8080/index.html">Usuario</a>
+        <a href="http://localhost:8080/pagos.html">Pago</a>
+        <a href="http://localhost:8080/detalles_venta.html">Detallesventa</a>
+        <a href="http://localhost:8080/productos">Productos</a>
+        <a href="http://localhost:8080/ventas.html">Ventas</a>
     </nav>
+
     <div class="container">
-    <h1>Lista de Productos</h1>
-    <ul id="productos-lista"></ul>
+        <h1>Lista de Productos</h1>
+        <ul id="productos-lista"></ul>
 
-    <h2>Crear Producto</h2>
-    <form id="crear-producto-form">
-        <input type="text" id="nombre-producto" placeholder="Nombre del producto" required>
-        <input type="number" id="precio-producto" placeholder="Precio del producto" required step="0.01">
-        <input type="number" id="cantidad-producto" placeholder="Cantidad del producto" required>
-        <select id="categoria-producto" required>
-            <option value="" disabled selected>Seleccione una categoría</option>
-            <option value="Alimentos">Alimentos</option>
-            <option value="Bebidas">Bebidas</option>
-            <option value="Limpieza y Hogar">Limpieza y Hogar</option>
-            <option value="Cuidado personal">Cuidado personal</option>
-            <option value="Bebés y maternidad">Bebés y maternidad</option>
-            <option value="Mascotas">Mascotas</option>
-            <option value="Salud y bienestar">Salud y bienestar</option>
-        </select>
-        <button type="submit">Crear</button>
-    </form>
+        <h2>Crear Producto</h2>
+        <form id="crear-producto-form">
+            <input type="text" id="nombre-producto" placeholder="Nombre del producto" required>
+            <input type="number" id="precio-producto" placeholder="Precio del producto" required step="0.01">
+            <input type="number" id="cantidad-producto" placeholder="Cantidad del producto" required>
+            <select id="categoria-producto" required>
+                <option value="" disabled selected>Seleccione una categoría</option>
+                <option value="Alimentos">Alimentos</option>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Limpieza y Hogar">Limpieza y Hogar</option>
+                <option value="Cuidado personal">Cuidado personal</option>
+                <option value="Bebés y maternidad">Bebés y maternidad</option>
+                <option value="Mascotas">Mascotas</option>
+                <option value="Salud y bienestar">Salud y bienestar</option>
+            </select>
+            <button type="submit">Crear</button>
+        </form>
 
-    <h2>Modificar Producto</h2>
-    <form id="modificar-producto-form">
-        <input type="number" id="id-producto-modificar" placeholder="ID del producto" required>
-        <input type="text" id="nombre-producto-modificar" placeholder="Nuevo nombre del producto" required>
-        <input type="number" id="precio-producto-modificar" placeholder="Nuevo precio del producto" required step="0.01">
-        <input type="number" id="cantidad-producto-modificar" placeholder="Nueva cantidad del producto" required>
-        <select id="categoria-producto-modificar" required>
-            <option value="" disabled selected>Seleccione una categoría</option>
-            <option value="Alimentos">Alimentos</option>
-            <option value="Bebidas">Bebidas</option>
-            <option value="Limpieza y Hogar">Limpieza y Hogar</option>
-            <option value="Cuidado personal">Cuidado personal</option>
-            <option value="Bebés y maternidad">Bebés y maternidad</option>
-            <option value="Mascotas">Mascotas</option>
-            <option value="Salud y bienestar">Salud y bienestar</option>
-        </select>
-        <button type="submit">Modificar</button>
-    </form>
+        <h2>Modificar Producto</h2>
+        <form id="modificar-producto-form">
+            <input type="number" id="id-producto-modificar" placeholder="ID del producto" required>
+            <input type="text" id="nombre-producto-modificar" placeholder="Nuevo nombre del producto" required>
+            <input type="number" id="precio-producto-modificar" placeholder="Nuevo precio del producto" required step="0.01">
+            <input type="number" id="cantidad-producto-modificar" placeholder="Nueva cantidad del producto" required>
+            <select id="categoria-producto-modificar" required>
+                <option value="" disabled selected>Seleccione una categoría</option>
+                <option value="Alimentos">Alimentos</option>
+                <option value="Bebidas">Bebidas</option>
+                <option value="Limpieza y Hogar">Limpieza y Hogar</option>
+                <option value="Cuidado personal">Cuidado personal</option>
+                <option value="Bebés y maternidad">Bebés y maternidad</option>
+                <option value="Mascotas">Mascotas</option>
+                <option value="Salud y bienestar">Salud y bienestar</option>
+            </select>
+            <button type="submit">Modificar</button>
+        </form>
 
-    <h2>Eliminar Producto</h2>
-    <form id="eliminar-producto-form">
-        <input type="number" id="id-producto-eliminar" placeholder="ID del producto" required>
-        <button type="submit">Eliminar</button>
-    </form>
+        <h2>Eliminar Producto</h2>
+        <form id="eliminar-producto-form">
+            <input type="number" id="id-producto-eliminar" placeholder="ID del producto" required>
+            <button type="submit">Eliminar</button>
+        </form>
+    </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const lista = document.getElementById('productos-lista');
-
-            function cargarProductos() {
-                fetch('/api/productos')
-                    .then(response => response.json())
-                    .then(data => {
-                        lista.innerHTML = '';
-                        data.forEach(producto => {
-                            const li = document.createElement('li');
-                            li.textContent = `${producto.id} - ${producto.nombre} - Precio: $${producto.precio} - Cantidad: ${producto.cantidad} - Categoría: ${producto.categoria}`;
-                            lista.appendChild(li);
-                        });
-                    });
-            }
-
-            cargarProductos();
-
-            document.getElementById('crear-producto-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const nombre = document.getElementById('nombre-producto').value;
-                const precio = document.getElementById('precio-producto').value;
-                const cantidad = document.getElementById('cantidad-producto').value;
-                const categoria = document.getElementById('categoria-producto').value;
-
-                fetch('/api/productos', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ nombre, precio, cantidad, categoria })
-                }).then(response => response.json())
-                  .then(() => {
-                      cargarProductos();
-                      document.getElementById('crear-producto-form').reset();
-                  });
-            });
-
-            document.getElementById('modificar-producto-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const id = document.getElementById('id-producto-modificar').value;
-                const nombre = document.getElementById('nombre-producto-modificar').value;
-                const precio = document.getElementById('precio-producto-modificar').value;
-                const cantidad = document.getElementById('cantidad-producto-modificar').value;
-                const categoria = document.getElementById('categoria-producto-modificar').value;
-
-                fetch(`/api/productos/${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ nombre, precio, cantidad, categoria })
-                }).then(response => {
-                    if (response.ok) {
-                        cargarProductos();
-                        document.getElementById('modificar-producto-form').reset();
-                    } else {
-                        alert('Producto no encontrado');
-                    }
-                });
-            });
-
-            document.getElementById('eliminar-producto-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                const id = document.getElementById('id-producto-eliminar').value;
-                fetch(`/api/productos/${id}`, {
-                    method: 'DELETE'
-                }).then(response => {
-                    if (response.ok) {
-                        cargarProductos();
-                        document.getElementById('eliminar-producto-form').reset();
-                    } else {
-                        alert('Producto no encontrado');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="js/productos.js"></script>
 </body>
 </html>
