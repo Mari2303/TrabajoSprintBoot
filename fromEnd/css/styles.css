@@ -1,48 +1,112 @@
-  
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    body {
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: background-color 0.3s, color 0.3s;
-    }
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f9fa;
+  color: #001f3f;
+}
 
-    .navbar {
-      background-color: var(--card-bg) !important;
-    }
+.navbar {
+  background-color: #001f3f;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
 
-    .navbar .nav-link, .navbar-brand {
-      color: var(--text-color) !important;
-    }
+.navbar a {
+  color: white;
+  text-decoration: none;
+  margin: 0 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
 
-    .card {
-      background-color: var(--card-bg);
-      color: var(--text-color);
-      border: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    }
+.navbar a:hover {
+  background-color: #ffc107;
+  color: #001f3f;
+}
 
-    .form-control {
-      background-color: var(--input-bg);
-      color: var(--text-color);
-      border: 1px solid var(--border-color);
-    }
+.container {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
 
-    .modal-content {
-      background-color: var(--card-bg);
-      color: var(--text-color);
-    }
+h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #001f3f;
+}
 
-    .table {
-      color: var(--text-color);
-    }
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1.5rem;
+}
 
-    .theme-toggle {
-      border: none;
-      background: none;
-      color: var(--text-color);
-      font-size: 1.3rem;
-    }
+.btn {
+  color: white !important;
+}
+.card {
+  background-color: #f0f2f5;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 12px;
+  color: #001f3f;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+}
 
-    .theme-toggle:hover {
-      color: #0d6efd;
-    }
+.card:hover {
+  background-color: #fcbe05;
+  color: #001f3f;
+  transform: translateY(-5px);
+}
+
+.bg-pagos {
+  background-color:  #001f3f !important; /* rosado fuerte */
+}
+
+.btn-pagos {
+  background-color:  #001f3f;
+  color: white;
+  border: none;
+}
+
+.btn-pagos:hover {
+  background-color:  #174879;
+  color: white;
+}
+
+
+
+
+.card-header{
+  color: #001f3f;
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .container {
+    padding: 1rem;
+    margin: 1rem;
+  }
+}

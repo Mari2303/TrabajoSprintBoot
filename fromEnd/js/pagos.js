@@ -78,3 +78,33 @@
         });
     });
 
+
+
+
+
+
+
+
+
+
+
+
+    // MODAL 
+
+    function abrirModal(id) {
+        document.getElementById(id).style.display = 'flex';
+      }
+  
+      function cerrarModal(id) {
+        document.getElementById(id).style.display = 'none';
+      }
+  
+      window.onclick = function (event) {
+        const modales = ['modalModificar', 'modalEliminar'];
+        modales.forEach(id => {
+          const modal = document.getElementById(id);
+          if (event.target === modal) {
+            cerrarModal(id);
+          }
+        });
+      };

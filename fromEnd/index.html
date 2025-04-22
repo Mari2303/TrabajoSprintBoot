@@ -8,12 +8,12 @@
     <!-- Bootstrap CSS -->
      <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-     
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
 </head>
 <body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.html">Gestión de Usuarios</a>
             <a class="navbar-brand" href="pagos.html">Pagos</a>
@@ -27,7 +27,7 @@
     <div class="container">
         <!-- Lista de Usuarios -->
         <div class="card mb-4">
-            <div class="card-header bg-primary text-white">
+            <div class="card-header bg-pagos text-white">
                 <h2 class="card-title">Lista de Usuario</h2>
             </div>
             <div class="card-body">
@@ -46,11 +46,11 @@
                     </tbody>
                 </table>
                 <!-- Botones para abrir modales -->
-                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#crearUsuarioModal">Crear Usuario</button>
-                <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#actualizarDocumentoModal">Actualizar Documento</button>
-                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal">Eliminar Usuario</button>
+                <button class="btn bg-pagos " data-bs-toggle="modal" data-bs-target="#crearUsuarioModal">Crear Usuario</button>
+                <button class="btn bg-pagos " data-bs-toggle="modal" data-bs-target="#actualizarDocumentoModal">Actualizar Documento</button>
+                <button class="btn  bg-pagos" data-bs-toggle="modal" data-bs-target="#eliminarUsuarioModal">Eliminar Usuario</button>
                 <input type="text" id="busqueda" placeholder="Buscar usuario...">
-                <button class="btn btn-primary" onclick="buscarUsuario()">Buscar</button>
+                <button class="btn  bg-pagos" onclick="buscarUsuario()">Buscar</button>
 
             </div>
         </div>
@@ -64,7 +64,7 @@
     <div class="modal fade" id="crearUsuarioModal" tabindex="-1" aria-labelledby="crearUsuarioModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-success text-white">
+                <div class="modal-header  bg-pagos text-white">
                     <h5 class="modal-title" id="crearUsuarioModalLabel">Crear Usuario</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
@@ -86,7 +86,7 @@
                             <label for="numero-documento-usuario" class="form-label">Número de Documento</label>
                             <input type="number" id="numero-documento-usuario" class="form-control" placeholder="Número de documento" required>
                         </div>
-                        <button type="submit" class="btn btn-success">Crear</button>
+                        <button type="submit" class="btn bg-pagos ">Crear</button>
                     </form>
                 </div>
             </div>
@@ -97,7 +97,7 @@
     <div class="modal fade" id="editarUsuarioModal" tabindex="-1" aria-labelledby="editarUsuarioModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
+                <div class="modal-header bg-pagos text-white">
                     <h5 class="modal-title" id="editarUsuarioModalLabel">Editar Usuario</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
@@ -116,7 +116,7 @@
                             <label for="editar-numero-celular" class="form-label">Número de Celular</label>
                             <input type="text" class="form-control" id="editar-numero-celular" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+                        <button type="submit" class="btn bg-pagos ">Guardar Cambios</button>
                     </form>
                 </div>
             </div>
@@ -129,7 +129,7 @@
     <div class="modal fade" id="actualizarDocumentoModal" tabindex="-1" aria-labelledby="actualizarDocumentoModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-warning text-white">
+                <div class="modal-header  bg-pagos text-white">
                     <h5 class="modal-title" id="actualizarDocumentoModalLabel">Actualizar Documento</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
@@ -143,7 +143,7 @@
                             <label for="nuevo-numero-documento" class="form-label">Nuevo Número de Documento</label>
                             <input type="number" id="nuevo-numero-documento" class="form-control" placeholder="Nuevo número de documento" required>
                         </div>
-                        <button type="submit" class="btn btn-warning">Actualizar</button>
+                        <button type="submit" class="btn bg-pagos ">Actualizar</button>
                     </form>
                 </div>
             </div>
@@ -154,7 +154,7 @@
     <div class="modal fade" id="eliminarUsuarioModal" tabindex="-1" aria-labelledby="eliminarUsuarioModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header bg-danger text-white">
+                <div class="modal-header  bg-pagos text-white">
                     <h5 class="modal-title" id="eliminarUsuarioModalLabel">Eliminar Usuario</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
@@ -164,7 +164,7 @@
                             <label for="numero-documento-eliminar" class="form-label">Número de Documento</label>
                             <input type="number" id="numero-documento-eliminar" class="form-control" placeholder="Número de documento" required>
                         </div>
-                        <button type="submit" class="btn btn-danger">Eliminar</button>
+                        <button type="submit" class="btn bg-pagos ">Eliminar</button>
                     </form>
                 </div>
             </div>
