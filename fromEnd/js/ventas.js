@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         <td>${venta.id}</td>
                         <td>${venta.usuario.id}</td>
                         <td>${venta.usuario.nombre}</td>
+                        <td>${venta.usuario.apellido}</td>
                         <td>${venta.fecha}</td>
                         <td>
                             <button class="btn btn-sm btn-primary me-2" 
