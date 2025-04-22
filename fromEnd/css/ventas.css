@@ -1,80 +1,47 @@
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    background-color: #f4f4f4;
-}
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s, color 0.3s;
+  }
 
-.navbar {
-    display: flex;
-    justify-content: space-around;
-    background-color: #007bff;
-    padding: 10px;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
+  .navbar {
+    background-color: var(--card-bg) !important;
+  }
 
-.navbar a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-}
+  .navbar .nav-link, .navbar-brand {
+    color: var(--text-color) !important;
+  }
 
-.navbar a:hover {
-    background-color: #0056b3;
-}
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-
-h1, h2 {
-    color: #333;
-}
-
-form {
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-input[type="text"], input[type="number"], input[type="date"] {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-button {
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: #fff;
+  .card {
+    background-color: var(--card-bg);
+    color: var(--text-color);
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
 
-button:hover {
-    background-color: #0056b3;
-}
+  .form-control {
+    background-color: var(--input-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+  }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-}
+  .modal-content {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+  }
 
-li {
-    padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    margin-bottom: 5px;
-}
+  .table {
+    color: var(--text-color);
+  }
+
+  .theme-toggle {
+    border: none;
+    background: none;
+    color: var(--text-color);
+    font-size: 1.3rem;
+  }
+
+  .theme-toggle:hover {
+    color: #0d6efd;
+  }
